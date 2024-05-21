@@ -1,0 +1,3 @@
+[submodule "src/submodules/message-protos"]
+	path = src/submodules/message-protos
+	url = git@github.com:brokenfulcrum/elixr-message-protos
