@@ -8,15 +8,14 @@ use serde_json::json;
 use crate::api::does_user_exist;
 use crate::api::models::UserDocument;
 use crate::ApiState;
-use crate::events::UserCreationEvent;
+use crate::events::{UserCreatedEvent};
 
 pub async fn create_user(
     State(state): State<ApiState>,
-    Json(params): Json<UserCreationEvent>,
+    Json(params): Json<UserCreatedEvent>,
 ) -> impl IntoResponse {
     debug!("Request received: {:#?}", params);
-    let user_id = params.user_id.clone();
-
+    let user_id = params.user.unwrap().user_id;
     // Make sure the user exists
     if does_user_exist(&state.firestore_client, &user_id).await? {
         return Err((
@@ -26,7 +25,6 @@ pub async fn create_user(
     };
 
     // Place the user in the DB. This should just be the user ID
-    let user_id = params.user_id.clone();
     if let Err(e) = state
         .firestore_client
         .fluent()
