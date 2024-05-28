@@ -48,5 +48,5 @@ jobs:
       - id: cloud-run-deploy
         uses: 'google-github-actions/deploy-cloudrun@v2'
         with:
-          service: 'elixr-user-service'
+          service: 'elixr-task-service'
           image: 'us-west2-docker.pkg.dev/alchemist-410607/elixr-task-service/elixr-task-service:latest'
